@@ -26,7 +26,7 @@ export function formatConvertedTime(
     dayLabel = fireInstant.toFormat('ccc, LLL d');
   }
 
-  return `${fireInstant.toFormat('h:mm a')} ${dayLabel}, ${fireInstant.offsetNameShort}`;
+  return `${fireInstant.toFormat('h:mm a')} ${dayLabel}, UTC${fireInstant.toFormat('ZZ')}`;
 }
 
 export function formatCountdown(nextFireUTC: string | null, now: DateTime): string {

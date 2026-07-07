@@ -101,7 +101,8 @@ export function AlarmEditScreen({ route, navigation }: Props) {
   const dateValue = new Date(`${oneTimeDate}T00:00:00`);
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+    <View style={styles.container}>
+      <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
       <Text style={styles.sectionLabel}>Label</Text>
       <TextInput
         style={styles.input}
@@ -158,17 +159,22 @@ export function AlarmEditScreen({ route, navigation }: Props) {
           )}
         </>
       )}
+      </ScrollView>
 
-      <Pressable style={styles.saveButton} onPress={handleSave}>
-        <Text style={styles.saveButtonText}>Save</Text>
-      </Pressable>
-
-      {existing && (
-        <Pressable style={styles.deleteButton} onPress={handleDelete}>
-          <Text style={styles.deleteButtonText}>Delete alarm</Text>
+      {/* Pinned footer so Save is always visible, regardless of form height,
+          platform, or whether repeat days / the date spinner are showing. */}
+      <View style={styles.footer}>
+        <Pressable style={styles.saveButton} onPress={handleSave}>
+          <Text style={styles.saveButtonText}>Save</Text>
         </Pressable>
-      )}
-    </ScrollView>
+
+        {existing && (
+          <Pressable style={styles.deleteButton} onPress={handleDelete}>
+            <Text style={styles.deleteButtonText}>Delete alarm</Text>
+          </Pressable>
+        )}
+      </View>
+    </View>
   );
 }
 
@@ -179,7 +185,13 @@ const styles = StyleSheet.create({
   },
   content: {
     padding: 16,
-    paddingBottom: 48,
+    paddingBottom: 24,
+  },
+  footer: {
+    padding: 16,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopColor: '#cbd5e1',
+    backgroundColor: '#fff',
   },
   sectionLabel: {
     fontSize: 13,
@@ -217,7 +229,6 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   saveButton: {
-    marginTop: 32,
     backgroundColor: '#2563eb',
     borderRadius: 10,
     paddingVertical: 14,
