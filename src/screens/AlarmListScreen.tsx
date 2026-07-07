@@ -15,7 +15,11 @@ export function AlarmListScreen({ navigation }: Props) {
 
   return (
     <View style={styles.container}>
-      <DualClockHeader homeTimeZone={settings.homeTimeZone} targetTimeZone={displayTimeZone} />
+      <DualClockHeader
+        homeTimeZone={settings.homeTimeZone}
+        targetTimeZone={displayTimeZone}
+        use24Hour={settings.use24HourClock}
+      />
 
       <FlatList
         data={alarms}
@@ -30,6 +34,7 @@ export function AlarmListScreen({ navigation }: Props) {
           <AlarmCard
             alarm={item}
             displayTimeZone={displayTimeZone}
+            use24Hour={settings.use24HourClock}
             onToggle={(enabled) => setAlarmEnabled(item.id, enabled)}
             onPress={() => navigation.navigate('AlarmEdit', { alarmId: item.id })}
           />

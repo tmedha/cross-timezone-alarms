@@ -10,11 +10,12 @@ const DAY_LABELS = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 interface Props {
   alarm: Alarm;
   displayTimeZone: string;
+  use24Hour: boolean;
   onToggle: (enabled: boolean) => void;
   onPress: () => void;
 }
 
-export function AlarmCard({ alarm, displayTimeZone, onToggle, onPress }: Props) {
+export function AlarmCard({ alarm, displayTimeZone, use24Hour, onToggle, onPress }: Props) {
   const now = useNow(30_000); // converted-time label only needs coarse refresh, not per-second
 
   const repeatSummary =
@@ -33,9 +34,9 @@ export function AlarmCard({ alarm, displayTimeZone, onToggle, onPress }: Props) 
         <Switch value={alarm.enabled} onValueChange={onToggle} />
       </View>
 
-      <Text style={styles.original}>{formatOriginalIntent(alarm)}</Text>
+      <Text style={styles.original}>{formatOriginalIntent(alarm, use24Hour)}</Text>
       <Text style={styles.converted}>
-        → {formatConvertedTime(alarm.nextFireUTC, displayTimeZone, now)}
+        → {formatConvertedTime(alarm.nextFireUTC, displayTimeZone, now, use24Hour)}
       </Text>
 
       <View style={styles.footerRow}>

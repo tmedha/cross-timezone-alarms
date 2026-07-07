@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Settings } from '../domain/alarm';
-import { getDeviceTimeZone } from '../domain/displayTimeZone';
+import { detectUses24HourClock, getDeviceTimeZone } from '../domain/displayTimeZone';
 
 const STORAGE_KEY = '@cross_timezone_alarms/settings';
 
@@ -8,6 +8,7 @@ export function defaultSettings(): Settings {
   return {
     homeTimeZone: getDeviceTimeZone(),
     displayTimeZoneMode: 'automatic',
+    use24HourClock: detectUses24HourClock(),
   };
 }
 

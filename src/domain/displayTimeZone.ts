@@ -17,3 +17,8 @@ export function resolveDisplayTimeZone(settings: Settings, deviceTimeZone: strin
 export function getDeviceTimeZone(): string {
   return Intl.DateTimeFormat().resolvedOptions().timeZone;
 }
+
+/** Locale-based default for the 12h/24h clock setting, used only to seed it on first launch. */
+export function detectUses24HourClock(): boolean {
+  return Intl.DateTimeFormat(undefined, { hour: 'numeric' }).resolvedOptions().hour12 === false;
+}

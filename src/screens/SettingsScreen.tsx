@@ -24,6 +24,7 @@ export function SettingsScreen({ navigation }: Props) {
     setDisplayTimeZoneMode,
     setManualTimeZone,
     setSimulatorTimeZone,
+    setUse24HourClock,
   } = useSettings();
 
   const openPicker = (title: string, onSelect: (zone: string) => void) => {
@@ -112,6 +113,29 @@ export function SettingsScreen({ navigation }: Props) {
         <Text style={styles.resolvedValue}>
           {getZoneLabel(displayTimeZone)} · UTC{currentOffset}
         </Text>
+      </View>
+
+      <Text style={styles.sectionLabel}>Clock format</Text>
+      <Text style={styles.helper}>
+        Applies everywhere times are shown: alarm times, the Home/Target clocks, and countdowns.
+      </Text>
+      <View style={styles.segmentRow}>
+        <Pressable
+          style={[styles.segment, !settings.use24HourClock && styles.segmentActive]}
+          onPress={() => setUse24HourClock(false)}
+        >
+          <Text style={[styles.segmentText, !settings.use24HourClock && styles.segmentTextActive]}>
+            12-hour
+          </Text>
+        </Pressable>
+        <Pressable
+          style={[styles.segment, settings.use24HourClock && styles.segmentActive]}
+          onPress={() => setUse24HourClock(true)}
+        >
+          <Text style={[styles.segmentText, settings.use24HourClock && styles.segmentTextActive]}>
+            24-hour
+          </Text>
+        </Pressable>
       </View>
     </ScrollView>
   );

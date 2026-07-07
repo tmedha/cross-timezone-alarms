@@ -21,6 +21,7 @@ export interface Settings {
   displayTimeZoneMode: DisplayTimeZoneMode;
   manualTimeZone?: string; // IANA zone, used when mode === 'manual'
   simulatorTimeZone?: string; // IANA zone, used when mode === 'simulator'
+  use24HourClock: boolean; // true = "18:00", false = "6:00 PM"
 }
 
 export function isRecurring(alarm: Pick<Alarm, 'repeatDays'>): boolean {

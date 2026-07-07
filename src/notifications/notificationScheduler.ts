@@ -1,6 +1,7 @@
 import * as Notifications from 'expo-notifications';
 import { SchedulableTriggerInputTypes } from 'expo-notifications';
 import { Alarm } from '../domain/alarm';
+import { loadSettings } from '../data/settingsRepository';
 import { formatOriginalIntent } from '../utils/time';
 
 Notifications.setNotificationHandler({
@@ -46,11 +47,13 @@ export async function scheduleAlarmNotification(alarm: Alarm): Promise<string | 
   const fireDate = new Date(alarm.nextFireUTC);
   if (fireDate.getTime() <= Date.now()) return undefined;
 
+  const { use24HourClock } = await loadSettings();
+
   try {
     return await Notifications.scheduleNotificationAsync({
       content: {
         title: alarm.label || 'Alarm',
-        body: formatOriginalIntent(alarm),
+        body: formatOriginalIntent(alarm, use24HourClock),
         sound: true,
         data: { alarmId: alarm.id },
       },

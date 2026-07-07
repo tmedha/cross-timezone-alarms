@@ -7,27 +7,43 @@ import { getZoneLabel } from '../data/timezoneCities';
 interface Props {
   homeTimeZone: string;
   targetTimeZone: string;
+  use24Hour: boolean;
 }
 
 /** Persistent header: always shows Home time alongside Target/Local time, live-ticking. */
-export function DualClockHeader({ homeTimeZone, targetTimeZone }: Props) {
+export function DualClockHeader({ homeTimeZone, targetTimeZone, use24Hour }: Props) {
   const now = useNow();
   const sameZone = homeTimeZone === targetTimeZone;
 
   return (
     <View style={styles.container}>
-      <ClockBlock label="HOME" zone={homeTimeZone} now={now} />
+      <ClockBlock label="HOME" zone={homeTimeZone} now={now} use24Hour={use24Hour} />
       <View style={styles.divider} />
-      <ClockBlock label={sameZone ? 'TARGET (same as home)' : 'TARGET'} zone={targetTimeZone} now={now} />
+      <ClockBlock
+        label={sameZone ? 'TARGET (same as home)' : 'TARGET'}
+        zone={targetTimeZone}
+        now={now}
+        use24Hour={use24Hour}
+      />
     </View>
   );
 }
 
-function ClockBlock({ label, zone, now }: { label: string; zone: string; now: ReturnType<typeof useNow> }) {
+function ClockBlock({
+  label,
+  zone,
+  now,
+  use24Hour,
+}: {
+  label: string;
+  zone: string;
+  now: ReturnType<typeof useNow>;
+  use24Hour: boolean;
+}) {
   return (
     <View style={styles.block}>
       <Text style={styles.label}>{label}</Text>
-      <Text style={styles.time}>{formatClock(zone, now)}</Text>
+      <Text style={styles.time}>{formatClock(zone, now, use24Hour)}</Text>
       <Text style={styles.sub}>{getZoneLabel(zone)}</Text>
       <Text style={styles.sub}>{formatZoneDateLabel(zone, now)}</Text>
     </View>

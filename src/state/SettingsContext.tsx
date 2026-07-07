@@ -20,6 +20,7 @@ interface SettingsContextValue {
   setDisplayTimeZoneMode: (mode: DisplayTimeZoneMode) => void;
   setManualTimeZone: (zone: string) => void;
   setSimulatorTimeZone: (zone: string) => void;
+  setUse24HourClock: (use24Hour: boolean) => void;
 }
 
 const SettingsContext = createContext<SettingsContextValue | undefined>(undefined);
@@ -79,6 +80,10 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     }));
   }, []);
 
+  const setUse24HourClock = useCallback((use24Hour: boolean) => {
+    setSettings((prev) => ({ ...prev, use24HourClock: use24Hour }));
+  }, []);
+
   const displayTimeZone = useMemo(
     () => resolveDisplayTimeZone(settings, deviceTimeZone),
     [settings, deviceTimeZone]
@@ -94,6 +99,7 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
       setDisplayTimeZoneMode,
       setManualTimeZone,
       setSimulatorTimeZone,
+      setUse24HourClock,
     }),
     [
       settings,
@@ -104,6 +110,7 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
       setDisplayTimeZoneMode,
       setManualTimeZone,
       setSimulatorTimeZone,
+      setUse24HourClock,
     ]
   );
 

@@ -116,7 +116,7 @@ export function AlarmEditScreen({ route, navigation }: Props) {
       {Platform.OS !== 'ios' && (
         <Pressable style={styles.rowButton} onPress={() => setShowTimePicker(true)}>
           <Text style={styles.rowButtonText}>
-            {DateTime.fromJSDate(timeValue).toFormat('h:mm a')}
+            {DateTime.fromJSDate(timeValue).toFormat(settings.use24HourClock ? 'HH:mm' : 'h:mm a')}
           </Text>
         </Pressable>
       )}
@@ -124,6 +124,7 @@ export function AlarmEditScreen({ route, navigation }: Props) {
         <DateTimePicker
           value={timeValue}
           mode="time"
+          is24Hour={settings.use24HourClock}
           display={Platform.OS === 'ios' ? 'spinner' : 'default'}
           onChange={onTimeChange}
         />
