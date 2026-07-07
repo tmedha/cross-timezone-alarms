@@ -39,6 +39,9 @@ instant is what the app schedules and uses.
 - **Real OS-scheduled notifications:** alarms fire via actual scheduled
   local notifications (`expo-notifications`), not just while the app is
   open in the foreground.
+- **12-hour / 24-hour clock format:** a Settings toggle that applies
+  everywhere a time is shown — alarm times, the Home/Target clocks, and
+  countdowns.
 
 ## Tech stack
 
